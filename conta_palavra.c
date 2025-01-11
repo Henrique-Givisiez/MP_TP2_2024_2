@@ -52,6 +52,22 @@ typedef struct {
     size_t tamanho;   // Quantidade de itens no array
 } Map;
 
+// Função para criar um "map" com palavras e contagens
+Map* criarMap() {
+    // Aloca o mapa dinamicamente
+    Map* mapa = (Map*)malloc(sizeof(Map));
+    if (mapa == NULL) {
+        perror("Erro ao alocar memória para o mapa");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Inicializa o mapa vazio
+    mapa->itens = NULL;
+    mapa->tamanho = 0;
+
+    return mapa;
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
     char* conteudo = lerArquivo(caminhoArquivo);
     return conteudo;
