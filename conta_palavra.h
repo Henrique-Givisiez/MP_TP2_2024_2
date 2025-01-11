@@ -22,6 +22,8 @@ void adicionarPalavra(Map* mapa, const char* palavra);
 void liberarMap(Map* mapa);
 Map* contarPalavras(const char* texto);
 char* mapParaString(const Map* mapa);
+int compararPalavras(const void* a, const void* b);
+void ordenarMapa(Map* mapa);
 #ifdef __cplusplus
 }
 #endif
