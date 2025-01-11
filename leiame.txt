@@ -1,0 +1,15 @@
+## REQUISITOS
+ - Compilador g++ 
+ - Comando make
+ - valgrind
+ - cppcheck
+ - cpplint
+ - gdb
+ - gcov
+
+## COMO USAR
+ - Para fazer a verificação dos testes, abra o terminal na raiz do diretório do projeto
+   e digite `make all`.
+
+## HISTÓRICO DOS COMMITS
+ - Para visualizar o histórico dos commits, abra o terminal e digite o comando `git log`.
