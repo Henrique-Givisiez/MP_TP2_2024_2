@@ -9,6 +9,7 @@ char* lerArquivo(const char* caminhoArquivo);
 Map* criarMap();
 void adicionarPalavra(Map* mapa, const char* palavra);
 void liberarMap(Map* mapa);
+Map* contarPalavras(const char* texto);
 #ifdef __cplusplus
 }
 #endif

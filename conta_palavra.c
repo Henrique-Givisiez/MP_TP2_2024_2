@@ -95,7 +95,27 @@ void liberarMap(Map* mapa) {
     free(mapa);
 }
 
+// Função principal
+Map* contarPalavras(const char* texto) {
+    Map* mapa = criarMap();
+    char* textoCopia = strdup(texto); // Criar uma cópia do texto para tokenizar
+    char* token = strtok(textoCopia, " \n");
+
+    while (token != NULL) {
+        adicionarPalavra(mapa, token);
+        token = strtok(NULL, " \n");
+    }
+
+    free(textoCopia); // Liberar a cópia do texto
+    return mapa;
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
+    
+    // Obtém o conteúdo do arquivo como string
     char* conteudo = lerArquivo(caminhoArquivo);
+    // Passa o conteúdo para a função contarPalavras
+    Map* mapa = contarPalavras(conteudo);
+
     return conteudo;
 }
