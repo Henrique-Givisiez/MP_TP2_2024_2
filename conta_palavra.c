@@ -128,6 +128,18 @@ char* mapParaString(const Map* mapa) {
     return resultado;
 }
 
+// Função de comparação para ordenar o mapa por palavra
+int compararPalavras(const void* a, const void* b) {
+    const Item* itemA = (const Item*)a;
+    const Item* itemB = (const Item*)b;
+    return strcmp(itemA->palavra, itemB->palavra);
+}
+
+// Função para ordenar o mapa
+void ordenarMapa(Map* mapa) {
+    qsort(mapa->itens, mapa->tamanho, sizeof(Item), compararPalavras);
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
 
     // Obtém o conteúdo do arquivo como string
@@ -137,11 +149,10 @@ char* ContaPalavra(const char * caminhoArquivo) {
 
     // Converte o mapa para string e exibe
     char* resultado = mapParaString(mapa);
-    printf("Resultado:\n%s\n", resultado);
 
     // Libera memória
     free(conteudo);
     free(resultado);
     liberarMap(mapa);
-    return conteudo;
+    return resultado;
 }
