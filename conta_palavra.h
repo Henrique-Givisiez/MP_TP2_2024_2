@@ -7,6 +7,7 @@ extern "C" {
 char* ContaPalavra(const char* caminho_arquivo);
 char* lerArquivo(const char* caminhoArquivo);
 Map* criarMap();
+void adicionarPalavra(Map* mapa, const char* palavra);
 #ifdef __cplusplus
 }
 #endif

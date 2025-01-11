@@ -68,6 +68,27 @@ Map* criarMap() {
     return mapa;
 }
 
+// Função para adicionar ou atualizar uma palavra no mapa
+void adicionarPalavra(Map* mapa, const char* palavra) {
+    for (size_t i = 0; i < mapa->tamanho; i++) {
+        if (strcmp(mapa->itens[i].palavra, palavra) == 0) {
+            mapa->itens[i].contagem++;
+            return;
+        }
+    }
+
+    // Se não encontrou, adiciona a nova palavra
+    mapa->itens = (Item*)realloc(mapa->itens, (mapa->tamanho + 1) * sizeof(Item));
+    if (mapa->itens == NULL) {
+        perror("Erro ao realocar memória para itens");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(mapa->itens[mapa->tamanho].palavra, palavra);
+    mapa->itens[mapa->tamanho].contagem = 1;
+    mapa->tamanho++;
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
     char* conteudo = lerArquivo(caminhoArquivo);
     return conteudo;
