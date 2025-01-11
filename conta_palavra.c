@@ -89,6 +89,12 @@ void adicionarPalavra(Map* mapa, const char* palavra) {
     mapa->tamanho++;
 }
 
+// Função para liberar memória
+void liberarMap(Map* mapa) {
+    free(mapa->itens);
+    free(mapa);
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
     char* conteudo = lerArquivo(caminhoArquivo);
     return conteudo;
