@@ -40,6 +40,18 @@ char* lerArquivo(const char* caminhoArquivo) {
     return conteudo;
 }
 
+// Estrutura para armazenar uma palavra e sua contagem
+typedef struct {
+    char palavra[50]; // Palavra com no máximo 49 caracteres
+    int contagem;     // Quantidade de ocorrências
+} Item;
+
+// Estrutura para armazenar o "map"
+typedef struct {
+    Item* itens;      // Array dinâmico de itens
+    size_t tamanho;   // Quantidade de itens no array
+} Map;
+
 char* ContaPalavra(const char * caminhoArquivo) {
     char* conteudo = lerArquivo(caminhoArquivo);
     return conteudo;
