@@ -40,18 +40,6 @@ char* lerArquivo(const char* caminhoArquivo) {
     return conteudo;
 }
 
-// Estrutura para armazenar uma palavra e sua contagem
-typedef struct {
-    char palavra[50]; // Palavra com no máximo 49 caracteres
-    int contagem;     // Quantidade de ocorrências
-} Item;
-
-// Estrutura para armazenar o "map"
-typedef struct {
-    Item* itens;      // Array dinâmico de itens
-    size_t tamanho;   // Quantidade de itens no array
-} Map;
-
 // Função para criar um "map" com palavras e contagens
 Map* criarMap() {
     // Aloca o mapa dinamicamente
@@ -110,12 +98,50 @@ Map* contarPalavras(const char* texto) {
     return mapa;
 }
 
+// Função para transformar o map em string
+char* mapParaString(const Map* mapa) {
+    size_t bufferSize = 1024; // Tamanho inicial do buffer
+    char* resultado = (char*)malloc(bufferSize);
+    if (resultado == NULL) {
+        perror("Erro ao alocar memória para a string do mapa");
+        exit(EXIT_FAILURE);
+    }
+    resultado[0] = '\0'; // Inicia a string vazia
+
+    for (size_t i = 0; i < mapa->tamanho; i++) {
+        char buffer[100];
+        snprintf(buffer, sizeof(buffer), "%s,%d", mapa->itens[i].palavra, mapa->itens[i].contagem);
+        if (strlen(resultado) + strlen(buffer) + 2 >= bufferSize) { // Realocar se necessário
+            bufferSize *= 2;
+            resultado = (char*)realloc(resultado, bufferSize);
+            if (resultado == NULL) {
+                perror("Erro ao realocar memória para a string do mapa");
+                exit(EXIT_FAILURE);
+            }
+        }
+        strcat(resultado, buffer);
+        if (i < mapa->tamanho - 1) {
+            strcat(resultado, ",");
+        }
+    }
+
+    return resultado;
+}
+
 char* ContaPalavra(const char * caminhoArquivo) {
-    
+
     // Obtém o conteúdo do arquivo como string
     char* conteudo = lerArquivo(caminhoArquivo);
     // Passa o conteúdo para a função contarPalavras
     Map* mapa = contarPalavras(conteudo);
 
+    // Converte o mapa para string e exibe
+    char* resultado = mapParaString(mapa);
+    printf("Resultado:\n%s\n", resultado);
+
+    // Libera memória
+    free(conteudo);
+    free(resultado);
+    liberarMap(mapa);
     return conteudo;
 }
