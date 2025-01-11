@@ -42,5 +42,5 @@ char* lerArquivo(const char* caminhoArquivo) {
 
 char* ContaPalavra(const char * caminhoArquivo) {
     char* conteudo = lerArquivo(caminhoArquivo);
-    return "";
+    return conteudo;
 }
