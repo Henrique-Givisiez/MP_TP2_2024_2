@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "./conta_palavra.h"
 
 // Função para processar o arquivo e retornar seu conteúdo como string
@@ -19,6 +20,14 @@ char* lerArquivo(const char* caminhoArquivo) {
 
     // Aloca memória para armazenar o conteúdo do arquivo
     char* conteudo = (char*)malloc((tamanhoArquivo + 1) * sizeof(char));
+    if ((unsigned char)conteudo[0] == 0xEF &&
+    (unsigned char)conteudo[1] == 0xBB &&
+    (unsigned char)conteudo[2] == 0xBF) {
+    // Deslocar tudo para a esquerda
+    memmove(conteudo, conteudo + 3, (tamanhoArquivo - 2));
+    tamanhoArquivo -= 3;
+    conteudo[tamanhoArquivo] = '\0';
+}   
     if (conteudo == NULL) {
         perror("Erro ao alocar memória para o conteúdo do arquivo");
         fclose(arquivo);
@@ -87,11 +96,11 @@ void liberarMap(Map* mapa) {
 Map* contarPalavras(const char* texto) {
     Map* mapa = criarMap();
     char* textoCopia = strdup(texto); // Criar uma cópia do texto para tokenizar
-    char* token = strtok(textoCopia, " \n");
+    char* token = strtok(textoCopia, " \r\n");
 
     while (token != NULL) {
         adicionarPalavra(mapa, token);
-        token = strtok(NULL, " \n");
+        token = strtok(NULL, " \r\n");
     }
 
     free(textoCopia); // Liberar a cópia do texto
@@ -128,31 +137,171 @@ char* mapParaString(const Map* mapa) {
     return resultado;
 }
 
+// Retorna "rank" para variações de acentos/maiúscula de uma mesma letra base
+// Quanto MENOR o rank, MAIS cedo aparece na ordenação.
+int ordemAcento(char c) {
+    switch ((unsigned char)c) {
+        // ---- Letra 'a'
+        case 'a': return 0;
+        case 'A': return 1;
+        case 'á': return 2;
+        case 'Á': return 3;
+        case 'à': return 4;
+        case 'À': return 5;
+        case 'â': return 6;
+        case 'Â': return 7;
+        case 'ã': return 8;
+        case 'Ã': return 9;
+
+        // ---- Letra 'e'
+        case 'e': return 0;
+        case 'E': return 1;
+        case 'é': return 2;
+        case 'É': return 3;
+        case 'ê': return 4;
+        case 'Ê': return 5;
+
+        // ---- Letra 'i'
+        case 'i': return 0;
+        case 'I': return 1;
+        case 'í': return 2;
+        case 'Í': return 3;
+
+        // ---- Letra 'o'
+        case 'o': return 0;
+        case 'O': return 1;
+        case 'ó': return 2;
+        case 'Ó': return 3;
+        case 'ô': return 4;
+        case 'Ô': return 5;
+        case 'õ': return 6;
+        case 'Õ': return 7;
+
+        // ---- Letra 'u'
+        case 'u': return 0;
+        case 'U': return 1;
+        case 'ú': return 2;
+        case 'Ú': return 3;
+
+        // ---- Letra 'c' (cedilha)
+        case 'c': return 0;
+        case 'C': return 1;
+        case 'ç': return 2;
+        case 'Ç': return 3;
+
+        // Para qualquer outra letra, devolvemos algo "padrão" (por ex., 0).
+        // Isso significa que, se não for uma letra mapeada, não diferenciamos minúscula/acento.
+        default:
+            return 0;
+    }
+}
+
+
+// Converte o caractere acentuado/maiúsculo em uma forma base minúscula.
+// Exemplos: 'Á', 'à', 'â', 'ã' -> 'a', 'Ç' -> 'c', etc.
+char converteMinusculo(char c) {
+    switch ((unsigned char)c) {
+        // -- Variações de 'a'
+        case 'A': case 'Á': case 'À': case 'Â': case 'Ã':
+        case 'a': case 'á': case 'à': case 'â': case 'ã':
+            return 'a';
+
+        // -- Variações de 'e'
+        case 'E': case 'É': case 'Ê':
+        case 'e': case 'é': case 'ê':
+            return 'e';
+
+        // -- Variações de 'i'
+        case 'I': case 'Í':
+        case 'i': case 'í':
+            return 'i';
+
+        // -- Variações de 'o'
+        case 'O': case 'Ó': case 'Ô': case 'Õ':
+        case 'o': case 'ó': case 'ô': case 'õ':
+            return 'o';
+
+        // -- Variações de 'u'
+        case 'U': case 'Ú':
+        case 'u': case 'ú':
+            return 'u';
+
+        // -- Variações de 'c' (cedilha)
+        case 'C': case 'Ç':
+        case 'c': case 'ç':
+            return 'c';
+
+        // Se quiser lidar com 'n' e til espanhol, adicione aqui:
+        // case 'Ñ': case 'ñ': return 'n';
+
+        default:
+            // Outros caracteres: apenas converta para minúsculo básico
+            return (char)tolower((unsigned char)c);
+    }
+}
+
+
 // Função de comparação para ordenar o mapa por palavra
 int compararPalavras(const void* a, const void* b) {
+    // Supondo que existam structs com campo .palavra
     const Item* itemA = (const Item*)a;
     const Item* itemB = (const Item*)b;
-    return strcmp(itemA->palavra, itemB->palavra);
+
+    const char* s1 = itemA->palavra;
+    const char* s2 = itemB->palavra;
+
+    while (*s1 != '\0' && *s2 != '\0') {
+        // 1) Obtemos a letra base (em minúsculo)
+        char base1 = converteMinusculo(*s1);
+        char base2 = converteMinusculo(*s2);
+
+        // 2) Se as bases forem diferentes, ordenamos primeiro por base
+        if (base1 != base2) {
+            return (base1 - base2); 
+        } else {
+            // 3) As bases são iguais, checamos o "rank" de acentuação
+            int rank1 = ordemAcento(*s1);
+            int rank2 = ordemAcento(*s2);
+
+            if (rank1 != rank2) {
+                return (rank1 - rank2);
+            } else {
+                // Mesmo rank => mesmo "tipo" de caractere (ou não mapeado).
+                // Continuar para o próximo caractere
+                s1++;
+                s2++;
+            }
+        }
+    }
+
+    // 4) Se chegamos aqui, ou *s1 ou *s2 é '\0'.
+    //    Se um terminou e o outro não, o que terminou é "menor"
+    return (*s1 - *s2);
 }
 
 // Função para ordenar o mapa
 void ordenarMapa(Map* mapa) {
-    qsort(mapa->itens, mapa->tamanho, sizeof(Item), compararPalavras);
+    qsort(mapa->itens,
+        mapa->tamanho,
+        sizeof(Item),
+        compararPalavras);
 }
 
 char* ContaPalavra(const char * caminhoArquivo) {
 
     // Obtém o conteúdo do arquivo como string
     char* conteudo = lerArquivo(caminhoArquivo);
+    
     // Passa o conteúdo para a função contarPalavras
     Map* mapa = contarPalavras(conteudo);
+
+    ordenarMapa(mapa);
 
     // Converte o mapa para string e exibe
     char* resultado = mapParaString(mapa);
 
     // Libera memória
     free(conteudo);
-    free(resultado);
     liberarMap(mapa);
     return resultado;
 }
