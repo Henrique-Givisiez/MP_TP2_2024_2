@@ -6,6 +6,7 @@
  - cpplint
  - gdb
  - gcov
+ - UTF-8 como encoding
 
 ## COMO USAR
  - Para fazer a verificação dos testes, abra o terminal na raiz do diretório do projeto
