@@ -15,8 +15,8 @@ char* lerArquivo(const char* caminhoArquivo) {
 
     // Posiciona o ponteiro no final do arquivo para determinar o tamanho
     fseek(arquivo, 0, SEEK_END);
-    long tamanhoArquivo = ftell(arquivo);
-    rewind(arquivo); // Retorna o ponteiro ao início do arquivo
+    __int16_t tamanhoArquivo = ftell(arquivo);
+    rewind(arquivo);  // Retorna o ponteiro ao início do arquivo
 
     // Aloca memória para armazenar o conteúdo do arquivo
     char* conteudo = (char*)malloc((tamanhoArquivo + 1) * sizeof(char));
@@ -27,7 +27,7 @@ char* lerArquivo(const char* caminhoArquivo) {
     memmove(conteudo, conteudo + 3, (tamanhoArquivo - 2));
     tamanhoArquivo -= 3;
     conteudo[tamanhoArquivo] = '\0';
-}   
+}
     if (conteudo == NULL) {
         perror("Erro ao alocar memória para o conteúdo do arquivo");
         fclose(arquivo);
@@ -43,7 +43,9 @@ char* lerArquivo(const char* caminhoArquivo) {
         return NULL;
     }
 
-    conteudo[tamanhoArquivo] = '\0'; // Garante que a string é terminada corretamente
+    // Garante que a string é terminada corretamente
+
+    conteudo[tamanhoArquivo] = '\0';
 
     fclose(arquivo);
     return conteudo;
@@ -57,7 +59,7 @@ Map* criarMap() {
         perror("Erro ao alocar memória para o mapa");
         exit(EXIT_FAILURE);
     }
-    
+
     // Inicializa o mapa vazio
     mapa->itens = NULL;
     mapa->tamanho = 0;
@@ -75,7 +77,8 @@ void adicionarPalavra(Map* mapa, const char* palavra) {
     }
 
     // Se não encontrou, adiciona a nova palavra
-    mapa->itens = (Item*)realloc(mapa->itens, (mapa->tamanho + 1) * sizeof(Item));
+    mapa->itens = (Item*)realloc(mapa->itens,
+    (mapa->tamanho + 1) * sizeof(Item));
     if (mapa->itens == NULL) {
         perror("Erro ao realocar memória para itens");
         exit(EXIT_FAILURE);
@@ -95,7 +98,7 @@ void liberarMap(Map* mapa) {
 // Função principal
 Map* contarPalavras(const char* texto) {
     Map* mapa = criarMap();
-    char* textoCopia = strdup(texto); // Criar uma cópia do texto para tokenizar
+    char* textoCopia = strdup(texto);
     char* token = strtok(textoCopia, " \r\n");
 
     while (token != NULL) {
@@ -103,24 +106,26 @@ Map* contarPalavras(const char* texto) {
         token = strtok(NULL, " \r\n");
     }
 
-    free(textoCopia); // Liberar a cópia do texto
+    free(textoCopia);  // Liberar a cópia do texto
     return mapa;
 }
 
 // Função para transformar o map em string
 char* mapParaString(const Map* mapa) {
-    size_t bufferSize = 1024; // Tamanho inicial do buffer
+    size_t bufferSize = 1024;  // Tamanho inicial do buffer
     char* resultado = (char*)malloc(bufferSize);
     if (resultado == NULL) {
         perror("Erro ao alocar memória para a string do mapa");
         exit(EXIT_FAILURE);
     }
-    resultado[0] = '\0'; // Inicia a string vazia
+    resultado[0] = '\0';  // Inicia a string vazia
 
     for (size_t i = 0; i < mapa->tamanho; i++) {
         char buffer[100];
-        snprintf(buffer, sizeof(buffer), "%s,%d", mapa->itens[i].palavra, mapa->itens[i].contagem);
-        if (strlen(resultado) + strlen(buffer) + 2 >= bufferSize) { // Realocar se necessário
+        snprintf(buffer, sizeof(buffer), "%s,%d",
+        mapa->itens[i].palavra,
+        mapa->itens[i].contagem);
+        if (strlen(resultado) + strlen(buffer) + 2 >= bufferSize) {
             bufferSize *= 2;
             resultado = (char*)realloc(resultado, bufferSize);
             if (resultado == NULL) {
@@ -189,8 +194,6 @@ int ordemAcento(char c) {
         case 'ç': return 2;
         case 'Ç': return 3;
 
-        // Para qualquer outra letra, devolvemos algo "padrão" (por ex., 0).
-        // Isso significa que, se não for uma letra mapeada, não diferenciamos minúscula/acento.
         default:
             return 0;
     }
@@ -257,7 +260,7 @@ int compararPalavras(const void* a, const void* b) {
 
         // 2) Se as bases forem diferentes, ordenamos primeiro por base
         if (base1 != base2) {
-            return (base1 - base2); 
+            return (base1 - base2);
         } else {
             // 3) As bases são iguais, checamos o "rank" de acentuação
             int rank1 = ordemAcento(*s1);
@@ -287,11 +290,10 @@ void ordenarMapa(Map* mapa) {
         compararPalavras);
 }
 
-char* ContaPalavra(const char * caminhoArquivo) {
-
+char* ContaPalavra(const char* caminhoArquivo) {
     // Obtém o conteúdo do arquivo como string
     char* conteudo = lerArquivo(caminhoArquivo);
-    
+
     // Passa o conteúdo para a função contarPalavras
     Map* mapa = contarPalavras(conteudo);
 

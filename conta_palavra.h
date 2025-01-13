@@ -8,7 +8,7 @@ char* ContaPalavra(const char* caminho_arquivo);
 char* lerArquivo(const char* caminhoArquivo);
 // Estrutura para armazenar uma palavra e sua contagem
 typedef struct {
-    char palavra[50]; // Palavra com no máximo 49 caracteres
+    char palavra[50];  // Palavra com no máximo 49 caracteres
     int contagem;     // Quantidade de ocorrências
 } Item;
 
