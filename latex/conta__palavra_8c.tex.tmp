@@ -1,0 +1,300 @@
+\hypertarget{conta__palavra_8c}{}\doxysection{Referência ao ficheiro conta\+\_\+palavra.\+c}
+\label{conta__palavra_8c}\index{conta\_palavra.c@{conta\_palavra.c}}
+
+
+Implementação do programa para contar palavras em arquivos de texto.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$wchar.\+h$>$}\newline
+{\ttfamily \#include $<$wctype.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}./conta\+\_\+palavra.\+h\char`\"{}}\newline
+Diagrama de dependências de inclusão para conta\+\_\+palavra.\+c\+:
+% FIG 0
+\doxysubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+wchar\+\_\+t $\ast$ \mbox{\hyperlink{conta__palavra_8c_a746841985d03125bf789f781996cf196}{ler\+Arquivo}} (const char $\ast$caminho\+Arquivo)
+\begin{DoxyCompactList}\small\item\em Lê o conteúdo de um arquivo e retorna como uma string wide (U\+T\+F-\/8). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structMap}{Map}} $\ast$ \mbox{\hyperlink{conta__palavra_8c_ab241ed8ec2b02546c5a8b1c5a10d9cf4}{criar\+Map}} ()
+\begin{DoxyCompactList}\small\item\em Cria uma estrutura de mapa para armazenar palavras e suas contagens. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{conta__palavra_8c_aca4ae2dae5b50ecdbb9d1d9cd56ab0e5}{adicionar\+Palavra}} (\mbox{\hyperlink{structMap}{Map}} $\ast$mapa, const wchar\+\_\+t $\ast$palavra)
+\begin{DoxyCompactList}\small\item\em Adiciona uma palavra ao mapa, incrementando sua contagem se já existir. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{conta__palavra_8c_aa66799c705b78e5ba6f008399114d6dd}{liberar\+Map}} (\mbox{\hyperlink{structMap}{Map}} $\ast$mapa)
+\begin{DoxyCompactList}\small\item\em Libera a memória utilizada por uma estrutura de mapa. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structMap}{Map}} $\ast$ \mbox{\hyperlink{conta__palavra_8c_a3587f71016c46ef7ac09b86bb7b10580}{contar\+Palavras}} (const wchar\+\_\+t $\ast$texto)
+\begin{DoxyCompactList}\small\item\em Conta as palavras em um texto e retorna um mapa com as contagens. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{conta__palavra_8c_af2fb3380d112abd423817b395f87037d}{map\+Para\+String}} (\mbox{\hyperlink{structMap}{Map}} $\ast$mapa)
+\begin{DoxyCompactList}\small\item\em Converte um mapa de palavras e contagens para uma string formatada. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{conta__palavra_8c_abeca23a1ca6dd3df1c76bfd897ed9c08}{ordem\+Acento}} (wchar\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Define a ordem de caracteres considerando acentos e capitalização. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{conta__palavra_8c_acdb63b3b49518f6a66fce5f69f4319ec}{converte\+Minusculo}} (char c)
+\begin{DoxyCompactList}\small\item\em Converte um caractere para sua forma base minúscula. \end{DoxyCompactList}\item 
+wchar\+\_\+t \mbox{\hyperlink{conta__palavra_8c_a9e42608aa0b744e92cc48e7164d86ec9}{remover\+Acento}} (wchar\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Remove os acentos de um caractere wide, se aplicável. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{conta__palavra_8c_ab5c2b726bc460828d056a3c1ab18302a}{comparar\+Palavras}} (const void $\ast$a, const void $\ast$b)
+\begin{DoxyCompactList}\small\item\em Função de comparação para ordenação de palavras no mapa. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{conta__palavra_8c_a5133a293b1c9d0773b5b5c5dd7ce705e}{ordenar\+Mapa}} (\mbox{\hyperlink{structMap}{Map}} $\ast$mapa)
+\begin{DoxyCompactList}\small\item\em Ordena o mapa de palavras em ordem alfabética. \end{DoxyCompactList}\item 
+wchar\+\_\+t $\ast$ \mbox{\hyperlink{conta__palavra_8c_af6f6194eff4fd1c034a3fc735c2be275}{converter\+Para\+Wide}} (const char $\ast$str)
+\begin{DoxyCompactList}\small\item\em Converte uma string de caracteres multibyte para wide string. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{conta__palavra_8c_a960256fafccba1f7d4aadb29597411c8}{Conta\+Palavra}} (const char $\ast$caminho\+Arquivo)
+\begin{DoxyCompactList}\small\item\em Função principal para contar palavras em um arquivo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Implementação do programa para contar palavras em arquivos de texto. 
+
+Este arquivo contém as definições de funções para leitura de arquivos, manipulação de mapas de palavras, ordenação e geração de saídas formatadas. 
+
+\doxysubsection{Documentação das funções}
+\mbox{\Hypertarget{conta__palavra_8c_aca4ae2dae5b50ecdbb9d1d9cd56ab0e5}\label{conta__palavra_8c_aca4ae2dae5b50ecdbb9d1d9cd56ab0e5}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!adicionarPalavra@{adicionarPalavra}}
+\index{adicionarPalavra@{adicionarPalavra}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{adicionarPalavra()}{adicionarPalavra()}}
+{\footnotesize\ttfamily void adicionar\+Palavra (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structMap}{Map}} $\ast$}]{mapa,  }\item[{const wchar\+\_\+t $\ast$}]{palavra }\end{DoxyParamCaption})}
+
+
+
+Adiciona uma palavra ao mapa, incrementando sua contagem se já existir. 
+
+Adiciona uma palavra ao mapa, incrementando sua contagem caso já exista.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em mapa} & Ponteiro para o mapa onde a palavra será adicionada. \\
+\hline
+{\em palavra} & Palavra a ser adicionada. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{conta__palavra_8c_ab5c2b726bc460828d056a3c1ab18302a}\label{conta__palavra_8c_ab5c2b726bc460828d056a3c1ab18302a}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!compararPalavras@{compararPalavras}}
+\index{compararPalavras@{compararPalavras}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{compararPalavras()}{compararPalavras()}}
+{\footnotesize\ttfamily int comparar\+Palavras (\begin{DoxyParamCaption}\item[{const void $\ast$}]{a,  }\item[{const void $\ast$}]{b }\end{DoxyParamCaption})}
+
+
+
+Função de comparação para ordenação de palavras no mapa. 
+
+Função de comparação para ordenação de palavras.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & Ponteiro para o primeiro elemento. \\
+\hline
+{\em b} & Ponteiro para o segundo elemento. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+int Resultado da comparação (-\/, 0, +). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_a960256fafccba1f7d4aadb29597411c8}\label{conta__palavra_8c_a960256fafccba1f7d4aadb29597411c8}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!ContaPalavra@{ContaPalavra}}
+\index{ContaPalavra@{ContaPalavra}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{ContaPalavra()}{ContaPalavra()}}
+{\footnotesize\ttfamily char$\ast$ Conta\+Palavra (\begin{DoxyParamCaption}\item[{const char $\ast$}]{caminho\+Arquivo }\end{DoxyParamCaption})}
+
+
+
+Função principal para contar palavras em um arquivo. 
+
+Conta palavras em um arquivo de texto.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em caminho\+Arquivo} & Caminho para o arquivo a ser processado. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+char$\ast$ String formatada com palavras e contagens. Deve ser liberada pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_a3587f71016c46ef7ac09b86bb7b10580}\label{conta__palavra_8c_a3587f71016c46ef7ac09b86bb7b10580}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!contarPalavras@{contarPalavras}}
+\index{contarPalavras@{contarPalavras}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{contarPalavras()}{contarPalavras()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structMap}{Map}}$\ast$ contar\+Palavras (\begin{DoxyParamCaption}\item[{const wchar\+\_\+t $\ast$}]{texto }\end{DoxyParamCaption})}
+
+
+
+Conta as palavras em um texto e retorna um mapa com as contagens. 
+
+Conta as palavras em um texto e retorna um mapa com os resultados.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em texto} & Texto a ser processado. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Map$\ast$ Ponteiro para o mapa com palavras e contagens. Deve ser liberado pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_acdb63b3b49518f6a66fce5f69f4319ec}\label{conta__palavra_8c_acdb63b3b49518f6a66fce5f69f4319ec}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!converteMinusculo@{converteMinusculo}}
+\index{converteMinusculo@{converteMinusculo}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{converteMinusculo()}{converteMinusculo()}}
+{\footnotesize\ttfamily char converte\+Minusculo (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})}
+
+
+
+Converte um caractere para sua forma base minúscula. 
+
+Converte um caractere para minúsculo.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em c} & Caractere a ser convertido. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+char Caractere convertido. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_af6f6194eff4fd1c034a3fc735c2be275}\label{conta__palavra_8c_af6f6194eff4fd1c034a3fc735c2be275}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!converterParaWide@{converterParaWide}}
+\index{converterParaWide@{converterParaWide}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{converterParaWide()}{converterParaWide()}}
+{\footnotesize\ttfamily wchar\+\_\+t$\ast$ converter\+Para\+Wide (\begin{DoxyParamCaption}\item[{const char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Converte uma string de caracteres multibyte para wide string. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em str} & String multibyte. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+wchar\+\_\+t$\ast$ Wide string correspondente. Deve ser liberada pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_ab241ed8ec2b02546c5a8b1c5a10d9cf4}\label{conta__palavra_8c_ab241ed8ec2b02546c5a8b1c5a10d9cf4}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!criarMap@{criarMap}}
+\index{criarMap@{criarMap}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{criarMap()}{criarMap()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structMap}{Map}}$\ast$ criar\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Cria uma estrutura de mapa para armazenar palavras e suas contagens. 
+
+Cria uma nova estrutura \mbox{\hyperlink{structMap}{Map}}.
+
+\begin{DoxyReturn}{Retorna}
+Map$\ast$ Ponteiro para o mapa criado. Deve ser liberado pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_a746841985d03125bf789f781996cf196}\label{conta__palavra_8c_a746841985d03125bf789f781996cf196}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!lerArquivo@{lerArquivo}}
+\index{lerArquivo@{lerArquivo}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{lerArquivo()}{lerArquivo()}}
+{\footnotesize\ttfamily wchar\+\_\+t$\ast$ ler\+Arquivo (\begin{DoxyParamCaption}\item[{const char $\ast$}]{caminho\+Arquivo }\end{DoxyParamCaption})}
+
+
+
+Lê o conteúdo de um arquivo e retorna como uma string wide (U\+T\+F-\/8). 
+
+Lê o conteúdo de um arquivo de texto.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em caminho\+Arquivo} & Caminho para o arquivo a ser lido. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+wchar\+\_\+t$\ast$ Conteúdo do arquivo em wide string. Deve ser liberado pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_aa66799c705b78e5ba6f008399114d6dd}\label{conta__palavra_8c_aa66799c705b78e5ba6f008399114d6dd}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!liberarMap@{liberarMap}}
+\index{liberarMap@{liberarMap}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{liberarMap()}{liberarMap()}}
+{\footnotesize\ttfamily void liberar\+Map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structMap}{Map}} $\ast$}]{mapa }\end{DoxyParamCaption})}
+
+
+
+Libera a memória utilizada por uma estrutura de mapa. 
+
+Libera a memória utilizada por um mapa.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em mapa} & Ponteiro para o mapa a ser liberado. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{conta__palavra_8c_af2fb3380d112abd423817b395f87037d}\label{conta__palavra_8c_af2fb3380d112abd423817b395f87037d}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!mapParaString@{mapParaString}}
+\index{mapParaString@{mapParaString}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{mapParaString()}{mapParaString()}}
+{\footnotesize\ttfamily char$\ast$ map\+Para\+String (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structMap}{Map}} $\ast$}]{mapa }\end{DoxyParamCaption})}
+
+
+
+Converte um mapa de palavras e contagens para uma string formatada. 
+
+Converte um mapa em uma string formatada.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em mapa} & Ponteiro para o mapa a ser convertido. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+char$\ast$ String formatada com palavras e contagens. Deve ser liberada pelo chamador. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_abeca23a1ca6dd3df1c76bfd897ed9c08}\label{conta__palavra_8c_abeca23a1ca6dd3df1c76bfd897ed9c08}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!ordemAcento@{ordemAcento}}
+\index{ordemAcento@{ordemAcento}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{ordemAcento()}{ordemAcento()}}
+{\footnotesize\ttfamily int ordem\+Acento (\begin{DoxyParamCaption}\item[{wchar\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Define a ordem de caracteres considerando acentos e capitalização. 
+
+Retorna a ordem de um caractere considerando acentos.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em c} & Caractere a ser avaliado. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+int Rank do caractere. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conta__palavra_8c_a5133a293b1c9d0773b5b5c5dd7ce705e}\label{conta__palavra_8c_a5133a293b1c9d0773b5b5c5dd7ce705e}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!ordenarMapa@{ordenarMapa}}
+\index{ordenarMapa@{ordenarMapa}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{ordenarMapa()}{ordenarMapa()}}
+{\footnotesize\ttfamily void ordenar\+Mapa (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structMap}{Map}} $\ast$}]{mapa }\end{DoxyParamCaption})}
+
+
+
+Ordena o mapa de palavras em ordem alfabética. 
+
+Ordena as palavras no mapa em ordem alfabética.
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em mapa} & Ponteiro para o mapa a ser ordenado. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{conta__palavra_8c_a9e42608aa0b744e92cc48e7164d86ec9}\label{conta__palavra_8c_a9e42608aa0b744e92cc48e7164d86ec9}} 
+\index{conta\_palavra.c@{conta\_palavra.c}!removerAcento@{removerAcento}}
+\index{removerAcento@{removerAcento}!conta\_palavra.c@{conta\_palavra.c}}
+\doxysubsubsection{\texorpdfstring{removerAcento()}{removerAcento()}}
+{\footnotesize\ttfamily wchar\+\_\+t remover\+Acento (\begin{DoxyParamCaption}\item[{wchar\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Remove os acentos de um caractere wide, se aplicável. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em c} & Caractere a ser processado. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+wchar\+\_\+t Caractere sem acento. 
+\end{DoxyReturn}

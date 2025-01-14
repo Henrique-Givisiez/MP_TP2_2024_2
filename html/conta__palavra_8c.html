@@ -1,0 +1,515 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MP-TP2-Contador-Palavras: Referência ao ficheiro conta_palavra.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">MP-TP2-Contador-Palavras
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Funções</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência ao ficheiro conta_palavra.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Implementação do programa para contar palavras em arquivos de texto.  
+<a href="#details">Mais...</a></p>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;wchar.h&gt;</code><br />
+<code>#include &lt;wctype.h&gt;</code><br />
+<code>#include &lt;locale.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="conta__palavra_8h_source.html">./conta_palavra.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Diagrama de dependências de inclusão para conta_palavra.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="conta__palavra_8c__incl.png" border="0" usemap="#conta__palavra_8c" alt=""/></div>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:a746841985d03125bf789f781996cf196"><td class="memItemLeft" align="right" valign="top">wchar_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#a746841985d03125bf789f781996cf196">lerArquivo</a> (const char *caminhoArquivo)</td></tr>
+<tr class="memdesc:a746841985d03125bf789f781996cf196"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê o conteúdo de um arquivo e retorna como uma string wide (UTF-8).  <a href="conta__palavra_8c.html#a746841985d03125bf789f781996cf196">Mais...</a><br /></td></tr>
+<tr class="separator:a746841985d03125bf789f781996cf196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab241ed8ec2b02546c5a8b1c5a10d9cf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMap.html">Map</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#ab241ed8ec2b02546c5a8b1c5a10d9cf4">criarMap</a> ()</td></tr>
+<tr class="memdesc:ab241ed8ec2b02546c5a8b1c5a10d9cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria uma estrutura de mapa para armazenar palavras e suas contagens.  <a href="conta__palavra_8c.html#ab241ed8ec2b02546c5a8b1c5a10d9cf4">Mais...</a><br /></td></tr>
+<tr class="separator:ab241ed8ec2b02546c5a8b1c5a10d9cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca4ae2dae5b50ecdbb9d1d9cd56ab0e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#aca4ae2dae5b50ecdbb9d1d9cd56ab0e5">adicionarPalavra</a> (<a class="el" href="structMap.html">Map</a> *mapa, const wchar_t *palavra)</td></tr>
+<tr class="memdesc:aca4ae2dae5b50ecdbb9d1d9cd56ab0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adiciona uma palavra ao mapa, incrementando sua contagem se já existir.  <a href="conta__palavra_8c.html#aca4ae2dae5b50ecdbb9d1d9cd56ab0e5">Mais...</a><br /></td></tr>
+<tr class="separator:aca4ae2dae5b50ecdbb9d1d9cd56ab0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa66799c705b78e5ba6f008399114d6dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#aa66799c705b78e5ba6f008399114d6dd">liberarMap</a> (<a class="el" href="structMap.html">Map</a> *mapa)</td></tr>
+<tr class="memdesc:aa66799c705b78e5ba6f008399114d6dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libera a memória utilizada por uma estrutura de mapa.  <a href="conta__palavra_8c.html#aa66799c705b78e5ba6f008399114d6dd">Mais...</a><br /></td></tr>
+<tr class="separator:aa66799c705b78e5ba6f008399114d6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3587f71016c46ef7ac09b86bb7b10580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMap.html">Map</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#a3587f71016c46ef7ac09b86bb7b10580">contarPalavras</a> (const wchar_t *texto)</td></tr>
+<tr class="memdesc:a3587f71016c46ef7ac09b86bb7b10580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conta as palavras em um texto e retorna um mapa com as contagens.  <a href="conta__palavra_8c.html#a3587f71016c46ef7ac09b86bb7b10580">Mais...</a><br /></td></tr>
+<tr class="separator:a3587f71016c46ef7ac09b86bb7b10580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2fb3380d112abd423817b395f87037d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#af2fb3380d112abd423817b395f87037d">mapParaString</a> (<a class="el" href="structMap.html">Map</a> *mapa)</td></tr>
+<tr class="memdesc:af2fb3380d112abd423817b395f87037d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converte um mapa de palavras e contagens para uma string formatada.  <a href="conta__palavra_8c.html#af2fb3380d112abd423817b395f87037d">Mais...</a><br /></td></tr>
+<tr class="separator:af2fb3380d112abd423817b395f87037d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeca23a1ca6dd3df1c76bfd897ed9c08"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#abeca23a1ca6dd3df1c76bfd897ed9c08">ordemAcento</a> (wchar_t c)</td></tr>
+<tr class="memdesc:abeca23a1ca6dd3df1c76bfd897ed9c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a ordem de caracteres considerando acentos e capitalização.  <a href="conta__palavra_8c.html#abeca23a1ca6dd3df1c76bfd897ed9c08">Mais...</a><br /></td></tr>
+<tr class="separator:abeca23a1ca6dd3df1c76bfd897ed9c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdb63b3b49518f6a66fce5f69f4319ec"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#acdb63b3b49518f6a66fce5f69f4319ec">converteMinusculo</a> (char c)</td></tr>
+<tr class="memdesc:acdb63b3b49518f6a66fce5f69f4319ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converte um caractere para sua forma base minúscula.  <a href="conta__palavra_8c.html#acdb63b3b49518f6a66fce5f69f4319ec">Mais...</a><br /></td></tr>
+<tr class="separator:acdb63b3b49518f6a66fce5f69f4319ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e42608aa0b744e92cc48e7164d86ec9"><td class="memItemLeft" align="right" valign="top">wchar_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#a9e42608aa0b744e92cc48e7164d86ec9">removerAcento</a> (wchar_t c)</td></tr>
+<tr class="memdesc:a9e42608aa0b744e92cc48e7164d86ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove os acentos de um caractere wide, se aplicável.  <a href="conta__palavra_8c.html#a9e42608aa0b744e92cc48e7164d86ec9">Mais...</a><br /></td></tr>
+<tr class="separator:a9e42608aa0b744e92cc48e7164d86ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c2b726bc460828d056a3c1ab18302a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#ab5c2b726bc460828d056a3c1ab18302a">compararPalavras</a> (const void *a, const void *b)</td></tr>
+<tr class="memdesc:ab5c2b726bc460828d056a3c1ab18302a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função de comparação para ordenação de palavras no mapa.  <a href="conta__palavra_8c.html#ab5c2b726bc460828d056a3c1ab18302a">Mais...</a><br /></td></tr>
+<tr class="separator:ab5c2b726bc460828d056a3c1ab18302a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5133a293b1c9d0773b5b5c5dd7ce705e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#a5133a293b1c9d0773b5b5c5dd7ce705e">ordenarMapa</a> (<a class="el" href="structMap.html">Map</a> *mapa)</td></tr>
+<tr class="memdesc:a5133a293b1c9d0773b5b5c5dd7ce705e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ordena o mapa de palavras em ordem alfabética.  <a href="conta__palavra_8c.html#a5133a293b1c9d0773b5b5c5dd7ce705e">Mais...</a><br /></td></tr>
+<tr class="separator:a5133a293b1c9d0773b5b5c5dd7ce705e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6f6194eff4fd1c034a3fc735c2be275"><td class="memItemLeft" align="right" valign="top">wchar_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#af6f6194eff4fd1c034a3fc735c2be275">converterParaWide</a> (const char *str)</td></tr>
+<tr class="memdesc:af6f6194eff4fd1c034a3fc735c2be275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converte uma string de caracteres multibyte para wide string.  <a href="conta__palavra_8c.html#af6f6194eff4fd1c034a3fc735c2be275">Mais...</a><br /></td></tr>
+<tr class="separator:af6f6194eff4fd1c034a3fc735c2be275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a960256fafccba1f7d4aadb29597411c8"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conta__palavra_8c.html#a960256fafccba1f7d4aadb29597411c8">ContaPalavra</a> (const char *caminhoArquivo)</td></tr>
+<tr class="memdesc:a960256fafccba1f7d4aadb29597411c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função principal para contar palavras em um arquivo.  <a href="conta__palavra_8c.html#a960256fafccba1f7d4aadb29597411c8">Mais...</a><br /></td></tr>
+<tr class="separator:a960256fafccba1f7d4aadb29597411c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><p>Implementação do programa para contar palavras em arquivos de texto. </p>
+<p>Este arquivo contém as definições de funções para leitura de arquivos, manipulação de mapas de palavras, ordenação e geração de saídas formatadas. </p>
+</div><h2 class="groupheader">Documentação das funções</h2>
+<a id="aca4ae2dae5b50ecdbb9d1d9cd56ab0e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca4ae2dae5b50ecdbb9d1d9cd56ab0e5">&#9670;&nbsp;</a></span>adicionarPalavra()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void adicionarPalavra </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMap.html">Map</a> *&#160;</td>
+          <td class="paramname"><em>mapa</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const wchar_t *&#160;</td>
+          <td class="paramname"><em>palavra</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adiciona uma palavra ao mapa, incrementando sua contagem se já existir. </p>
+<p>Adiciona uma palavra ao mapa, incrementando sua contagem caso já exista.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapa</td><td>Ponteiro para o mapa onde a palavra será adicionada. </td></tr>
+    <tr><td class="paramname">palavra</td><td>Palavra a ser adicionada. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab5c2b726bc460828d056a3c1ab18302a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c2b726bc460828d056a3c1ab18302a">&#9670;&nbsp;</a></span>compararPalavras()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int compararPalavras </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função de comparação para ordenação de palavras no mapa. </p>
+<p>Função de comparação para ordenação de palavras.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Ponteiro para o primeiro elemento. </td></tr>
+    <tr><td class="paramname">b</td><td>Ponteiro para o segundo elemento. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>int Resultado da comparação (-, 0, +). </dd></dl>
+
+</div>
+</div>
+<a id="a960256fafccba1f7d4aadb29597411c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a960256fafccba1f7d4aadb29597411c8">&#9670;&nbsp;</a></span>ContaPalavra()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* ContaPalavra </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>caminhoArquivo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função principal para contar palavras em um arquivo. </p>
+<p>Conta palavras em um arquivo de texto.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">caminhoArquivo</td><td>Caminho para o arquivo a ser processado. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>char* String formatada com palavras e contagens. Deve ser liberada pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="a3587f71016c46ef7ac09b86bb7b10580"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3587f71016c46ef7ac09b86bb7b10580">&#9670;&nbsp;</a></span>contarPalavras()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structMap.html">Map</a>* contarPalavras </td>
+          <td>(</td>
+          <td class="paramtype">const wchar_t *&#160;</td>
+          <td class="paramname"><em>texto</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Conta as palavras em um texto e retorna um mapa com as contagens. </p>
+<p>Conta as palavras em um texto e retorna um mapa com os resultados.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texto</td><td>Texto a ser processado. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>Map* Ponteiro para o mapa com palavras e contagens. Deve ser liberado pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="acdb63b3b49518f6a66fce5f69f4319ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdb63b3b49518f6a66fce5f69f4319ec">&#9670;&nbsp;</a></span>converteMinusculo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char converteMinusculo </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converte um caractere para sua forma base minúscula. </p>
+<p>Converte um caractere para minúsculo.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Caractere a ser convertido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>char Caractere convertido. </dd></dl>
+
+</div>
+</div>
+<a id="af6f6194eff4fd1c034a3fc735c2be275"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6f6194eff4fd1c034a3fc735c2be275">&#9670;&nbsp;</a></span>converterParaWide()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">wchar_t* converterParaWide </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converte uma string de caracteres multibyte para wide string. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String multibyte. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>wchar_t* Wide string correspondente. Deve ser liberada pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="ab241ed8ec2b02546c5a8b1c5a10d9cf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab241ed8ec2b02546c5a8b1c5a10d9cf4">&#9670;&nbsp;</a></span>criarMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structMap.html">Map</a>* criarMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cria uma estrutura de mapa para armazenar palavras e suas contagens. </p>
+<p>Cria uma nova estrutura <a class="el" href="structMap.html" title="Estrutura para armazenar um mapa de palavras e contagens.">Map</a>.</p>
+<dl class="section return"><dt>Retorna</dt><dd>Map* Ponteiro para o mapa criado. Deve ser liberado pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="a746841985d03125bf789f781996cf196"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a746841985d03125bf789f781996cf196">&#9670;&nbsp;</a></span>lerArquivo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">wchar_t* lerArquivo </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>caminhoArquivo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lê o conteúdo de um arquivo e retorna como uma string wide (UTF-8). </p>
+<p>Lê o conteúdo de um arquivo de texto.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">caminhoArquivo</td><td>Caminho para o arquivo a ser lido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>wchar_t* Conteúdo do arquivo em wide string. Deve ser liberado pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="aa66799c705b78e5ba6f008399114d6dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa66799c705b78e5ba6f008399114d6dd">&#9670;&nbsp;</a></span>liberarMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void liberarMap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMap.html">Map</a> *&#160;</td>
+          <td class="paramname"><em>mapa</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Libera a memória utilizada por uma estrutura de mapa. </p>
+<p>Libera a memória utilizada por um mapa.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapa</td><td>Ponteiro para o mapa a ser liberado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af2fb3380d112abd423817b395f87037d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2fb3380d112abd423817b395f87037d">&#9670;&nbsp;</a></span>mapParaString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* mapParaString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMap.html">Map</a> *&#160;</td>
+          <td class="paramname"><em>mapa</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converte um mapa de palavras e contagens para uma string formatada. </p>
+<p>Converte um mapa em uma string formatada.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapa</td><td>Ponteiro para o mapa a ser convertido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>char* String formatada com palavras e contagens. Deve ser liberada pelo chamador. </dd></dl>
+
+</div>
+</div>
+<a id="abeca23a1ca6dd3df1c76bfd897ed9c08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeca23a1ca6dd3df1c76bfd897ed9c08">&#9670;&nbsp;</a></span>ordemAcento()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ordemAcento </td>
+          <td>(</td>
+          <td class="paramtype">wchar_t&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define a ordem de caracteres considerando acentos e capitalização. </p>
+<p>Retorna a ordem de um caractere considerando acentos.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Caractere a ser avaliado. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>int Rank do caractere. </dd></dl>
+
+</div>
+</div>
+<a id="a5133a293b1c9d0773b5b5c5dd7ce705e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5133a293b1c9d0773b5b5c5dd7ce705e">&#9670;&nbsp;</a></span>ordenarMapa()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ordenarMapa </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMap.html">Map</a> *&#160;</td>
+          <td class="paramname"><em>mapa</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ordena o mapa de palavras em ordem alfabética. </p>
+<p>Ordena as palavras no mapa em ordem alfabética.</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapa</td><td>Ponteiro para o mapa a ser ordenado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9e42608aa0b744e92cc48e7164d86ec9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e42608aa0b744e92cc48e7164d86ec9">&#9670;&nbsp;</a></span>removerAcento()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">wchar_t removerAcento </td>
+          <td>(</td>
+          <td class="paramtype">wchar_t&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove os acentos de um caractere wide, se aplicável. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Caractere a ser processado. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>wchar_t Caractere sem acento. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
