@@ -2,6 +2,7 @@
     "files.associations": {
         "stdio.h": "c",
         "velha.h": "c",
-        "conta_palavra.h": "c"
+        "conta_palavra.h": "c",
+        "stdlib.h": "c"
     }
 }

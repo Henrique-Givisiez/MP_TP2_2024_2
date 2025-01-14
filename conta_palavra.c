@@ -3,10 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <wchar.h>
+#include <wctype.h>
+#include <locale.h>
 #include "./conta_palavra.h"
 
-// Função para processar o arquivo e retornar seu conteúdo como string
-char* lerArquivo(const char* caminhoArquivo) {
+wchar_t* lerArquivo(const char* caminhoArquivo) {
+    setlocale(LC_ALL, ""); // Define o locale para UTF-8
+
     FILE* arquivo = fopen(caminhoArquivo, "r");
     if (arquivo == NULL) {
         perror("Erro ao abrir o arquivo");
@@ -15,19 +19,11 @@ char* lerArquivo(const char* caminhoArquivo) {
 
     // Posiciona o ponteiro no final do arquivo para determinar o tamanho
     fseek(arquivo, 0, SEEK_END);
-    __int16_t tamanhoArquivo = ftell(arquivo);
-    rewind(arquivo);  // Retorna o ponteiro ao início do arquivo
+    long tamanhoArquivo = ftell(arquivo);
+    rewind(arquivo); // Retorna o ponteiro ao início do arquivo
 
     // Aloca memória para armazenar o conteúdo do arquivo
     char* conteudo = (char*)malloc((tamanhoArquivo + 1) * sizeof(char));
-    if ((unsigned char)conteudo[0] == 0xEF &&
-    (unsigned char)conteudo[1] == 0xBB &&
-    (unsigned char)conteudo[2] == 0xBF) {
-    // Deslocar tudo para a esquerda
-    memmove(conteudo, conteudo + 3, (tamanhoArquivo - 2));
-    tamanhoArquivo -= 3;
-    conteudo[tamanhoArquivo] = '\0';
-}
     if (conteudo == NULL) {
         perror("Erro ao alocar memória para o conteúdo do arquivo");
         fclose(arquivo);
@@ -36,7 +32,7 @@ char* lerArquivo(const char* caminhoArquivo) {
 
     // Lê o conteúdo do arquivo para a string
     size_t lido = fread(conteudo, 1, tamanhoArquivo, arquivo);
-    if (lido != tamanhoArquivo) {
+    if (lido != (size_t)tamanhoArquivo) {
         perror("Erro ao ler o arquivo");
         free(conteudo);
         fclose(arquivo);
@@ -44,16 +40,35 @@ char* lerArquivo(const char* caminhoArquivo) {
     }
 
     // Garante que a string é terminada corretamente
-
     conteudo[tamanhoArquivo] = '\0';
 
+    // Converte para wchar_t
+    size_t tamanhoWide = mbstowcs(NULL, conteudo, 0);
+    if (tamanhoWide == (size_t)-1) {
+        perror("Erro ao converter para wchar_t");
+        free(conteudo);
+        fclose(arquivo);
+        return NULL;
+    }
+
+    wchar_t* conteudoWide = (wchar_t*)malloc((tamanhoWide + 1) * sizeof(wchar_t));
+    if (conteudoWide == NULL) {
+        perror("Erro ao alocar memória para wchar_t");
+        free(conteudo);
+        fclose(arquivo);
+        return NULL;
+    }
+
+    mbstowcs(conteudoWide, conteudo, tamanhoWide + 1);
+
+    free(conteudo);
     fclose(arquivo);
-    return conteudo;
+    return conteudoWide;
 }
 
 // Função para criar um "map" com palavras e contagens
 Map* criarMap() {
-    // Aloca o mapa dinamicamente
+    // Aloca a estrutura Map
     Map* mapa = (Map*)malloc(sizeof(Map));
     if (mapa == NULL) {
         perror("Erro ao alocar memória para o mapa");
@@ -61,143 +76,119 @@ Map* criarMap() {
     }
 
     // Inicializa o mapa vazio
-    mapa->itens = NULL;
     mapa->tamanho = 0;
 
     return mapa;
 }
 
-// Função para adicionar ou atualizar uma palavra no mapa
-void adicionarPalavra(Map* mapa, const char* palavra) {
-    for (size_t i = 0; i < mapa->tamanho; i++) {
-        if (strcmp(mapa->itens[i].palavra, palavra) == 0) {
-            mapa->itens[i].contagem++;
+
+void adicionarPalavra(Map* mapa, const wchar_t* palavra) {
+    // Verifica se a palavra já existe no mapa
+    for (int i = 0; i < mapa->tamanho; i++) {
+        if (wcscmp(mapa->itens[i].palavra, palavra) == 0) {
+            mapa->itens[i].contagem++; // Incrementa a contagem
             return;
         }
     }
 
-    // Se não encontrou, adiciona a nova palavra
-    mapa->itens = (Item*)realloc(mapa->itens,
-    (mapa->tamanho + 1) * sizeof(Item));
-    if (mapa->itens == NULL) {
-        perror("Erro ao realocar memória para itens");
-        exit(EXIT_FAILURE);
+    // Verifica se há espaço no array fixo
+    if (mapa->tamanho >= 1000) {
+        fprintf(stderr, "Erro: limite de 1000 itens no mapa atingido\n");
+        return;
     }
 
-    strcpy(mapa->itens[mapa->tamanho].palavra, palavra);
-    mapa->itens[mapa->tamanho].contagem = 1;
-    mapa->tamanho++;
+    // Adiciona uma nova palavra ao mapa
+    wcscpy(mapa->itens[mapa->tamanho].palavra, palavra); // Copia a palavra
+    mapa->itens[mapa->tamanho].contagem = 1;             // Define a contagem inicial
+    mapa->tamanho++;                                     // Incrementa o tamanho do mapa
 }
+
 
 // Função para liberar memória
 void liberarMap(Map* mapa) {
-    free(mapa->itens);
     free(mapa);
 }
 
-// Função principal
-Map* contarPalavras(const char* texto) {
-    Map* mapa = criarMap();
-    char* textoCopia = strdup(texto);
-    char* token = strtok(textoCopia, " \r\n");
+#include <wchar.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-    while (token != NULL) {
-        adicionarPalavra(mapa, token);
-        token = strtok(NULL, " \r\n");
+Map* contarPalavras(const wchar_t* texto) {
+    // Duplicar texto (como wide string)
+    wchar_t* textoCopia = wcsdup(texto);
+    if (!textoCopia) {
+        perror("Erro ao duplicar texto");
+        return NULL;
     }
 
-    free(textoCopia);  // Liberar a cópia do texto
+    Map* mapa = criarMap(); // Inicializa o mapa
+    wchar_t* estado;
+    wchar_t* token = wcstok(textoCopia, L" \r\n", &estado);
+
+    while (token != NULL) {
+        // Adiciona a palavra diretamente como wchar_t
+        adicionarPalavra(mapa, token);
+
+        token = wcstok(NULL, L" \r\n", &estado);
+    }
+
+    free(textoCopia);
     return mapa;
 }
 
-// Função para transformar o map em string
-char* mapParaString(const Map* mapa) {
-    size_t bufferSize = 1024;  // Tamanho inicial do buffer
-    char* resultado = (char*)malloc(bufferSize);
-    if (resultado == NULL) {
-        perror("Erro ao alocar memória para a string do mapa");
-        exit(EXIT_FAILURE);
-    }
-    resultado[0] = '\0';  // Inicia a string vazia
 
-    for (size_t i = 0; i < mapa->tamanho; i++) {
-        char buffer[100];
-        snprintf(buffer, sizeof(buffer), "%s,%d",
-        mapa->itens[i].palavra,
-        mapa->itens[i].contagem);
-        if (strlen(resultado) + strlen(buffer) + 2 >= bufferSize) {
-            bufferSize *= 2;
-            resultado = (char*)realloc(resultado, bufferSize);
-            if (resultado == NULL) {
-                perror("Erro ao realocar memória para a string do mapa");
-                exit(EXIT_FAILURE);
+
+// Função para transformar o map em string
+char* mapParaString(Map* mapa) {
+    // Buffer para armazenar o resultado
+    size_t tamanhoTotal = 1024; // Tamanho inicial
+    char* resultado = (char*)malloc(tamanhoTotal);
+    if (!resultado) {
+        perror("Erro ao alocar memória para a saída");
+        return NULL;
+    }
+    resultado[0] = '\0'; // Inicia como string vazia
+
+    for (int i = 0; i < mapa->tamanho; i++) {
+        char palavraChar[256];
+        wcstombs(palavraChar, mapa->itens[i].palavra, sizeof(palavraChar)); // Converte para char*
+
+        char buffer[256];
+        snprintf(buffer, sizeof(buffer), "%s,%d", palavraChar, mapa->itens[i].contagem);
+
+        // Ajusta o tamanho do resultado, se necessário
+        if (strlen(resultado) + strlen(buffer) + 2 > tamanhoTotal) {
+            tamanhoTotal *= 2;
+            resultado = (char*)realloc(resultado, tamanhoTotal);
+            if (!resultado) {
+                perror("Erro ao redimensionar o buffer de saída");
+                return NULL;
             }
         }
+
+        // Adiciona ao resultado
         strcat(resultado, buffer);
         if (i < mapa->tamanho - 1) {
-            strcat(resultado, ",");
+            strcat(resultado, ","); // Adiciona separador entre itens
         }
     }
 
     return resultado;
 }
 
-// Retorna "rank" para variações de acentos/maiúscula de uma mesma letra base
-// Quanto MENOR o rank, MAIS cedo aparece na ordenação.
-int ordemAcento(char c) {
-    switch ((unsigned char)c) {
-        // ---- Letra 'a'
-        case 'a': return 0;
-        case 'A': return 1;
-        case 'á': return 2;
-        case 'Á': return 3;
-        case 'à': return 4;
-        case 'À': return 5;
-        case 'â': return 6;
-        case 'Â': return 7;
-        case 'ã': return 8;
-        case 'Ã': return 9;
+// Retorna "rank" para a ordem: minúscula base < maiúscula base < variações
+int ordemAcento(wchar_t c) {
+    wchar_t base = towlower(c); // Obtém a forma base minúscula do caractere
 
-        // ---- Letra 'e'
-        case 'e': return 0;
-        case 'E': return 1;
-        case 'é': return 2;
-        case 'É': return 3;
-        case 'ê': return 4;
-        case 'Ê': return 5;
-
-        // ---- Letra 'i'
-        case 'i': return 0;
-        case 'I': return 1;
-        case 'í': return 2;
-        case 'Í': return 3;
-
-        // ---- Letra 'o'
-        case 'o': return 0;
-        case 'O': return 1;
-        case 'ó': return 2;
-        case 'Ó': return 3;
-        case 'ô': return 4;
-        case 'Ô': return 5;
-        case 'õ': return 6;
-        case 'Õ': return 7;
-
-        // ---- Letra 'u'
-        case 'u': return 0;
-        case 'U': return 1;
-        case 'ú': return 2;
-        case 'Ú': return 3;
-
-        // ---- Letra 'c' (cedilha)
-        case 'c': return 0;
-        case 'C': return 1;
-        case 'ç': return 2;
-        case 'Ç': return 3;
-
-        default:
-            return 0;
+    if (c == base) {
+        return 0; // Minúscula base
+    } else if (c == towupper(base)) {
+        return 1; // Maiúscula base
+    } else {
+        return 2; // Outras variações
     }
 }
+
 
 
 // Converte o caractere acentuado/maiúsculo em uma forma base minúscula.
@@ -243,44 +234,47 @@ char converteMinusculo(char c) {
     }
 }
 
-
-// Função de comparação para ordenar o mapa por palavra
+// Remove os acentos de um caractere, se aplicável
+wchar_t removerAcento(wchar_t c) {
+    switch (c) {
+        case L'à': case L'á': case L'â': case L'ã': case L'ä': case L'å': return L'a';
+        case L'À': case L'Á': case L'Â': case L'Ã': case L'Ä': case L'Å': return L'A';
+        case L'è': case L'é': case L'ê': case L'ë': return L'e';
+        case L'È': case L'É': case L'Ê': case L'Ë': return L'E';
+        case L'ì': case L'í': case L'î': case L'ï': return L'i';
+        case L'Ì': case L'Í': case L'Î': case L'Ï': return L'I';
+        case L'ò': case L'ó': case L'ô': case L'õ': case L'ö': return L'o';
+        case L'Ò': case L'Ó': case L'Ô': case L'Õ': case L'Ö': return L'O';
+        case L'ù': case L'ú': case L'û': case L'ü': return L'u';
+        case L'Ù': case L'Ú': case L'Û': case L'Ü': return L'U';
+        case L'ç': return L'c';
+        case L'Ç': return L'C';
+        default: return c; // Retorna o caractere original se não for acentuado
+    }
+}
 int compararPalavras(const void* a, const void* b) {
-    // Supondo que existam structs com campo .palavra
     const Item* itemA = (const Item*)a;
     const Item* itemB = (const Item*)b;
 
-    const char* s1 = itemA->palavra;
-    const char* s2 = itemB->palavra;
+    const wchar_t* strA = itemA->palavra;
+    const wchar_t* strB = itemB->palavra;
 
-    while (*s1 != '\0' && *s2 != '\0') {
-        // 1) Obtemos a letra base (em minúsculo)
-        char base1 = converteMinusculo(*s1);
-        char base2 = converteMinusculo(*s2);
+    while (*strA != L'\0' && *strB != L'\0') {
+        wchar_t charA = removerAcento(towlower(*strA)); // Remove acento e converte para minúsculo
+        wchar_t charB = removerAcento(towlower(*strB)); // Remove acento e converte para minúsculo
 
-        // 2) Se as bases forem diferentes, ordenamos primeiro por base
-        if (base1 != base2) {
-            return (base1 - base2);
-        } else {
-            // 3) As bases são iguais, checamos o "rank" de acentuação
-            int rank1 = ordemAcento(*s1);
-            int rank2 = ordemAcento(*s2);
-
-            if (rank1 != rank2) {
-                return (rank1 - rank2);
-            } else {
-                // Mesmo rank => mesmo "tipo" de caractere (ou não mapeado).
-                // Continuar para o próximo caractere
-                s1++;
-                s2++;
-            }
+        if (charA != charB) {
+            return charA - charB; // Ordena com base no caractere normalizado
         }
+
+        strA++;
+        strB++;
     }
 
-    // 4) Se chegamos aqui, ou *s1 ou *s2 é '\0'.
-    //    Se um terminou e o outro não, o que terminou é "menor"
-    return (*s1 - *s2);
+    // Se uma string terminou, a menor string vem primeiro
+    return *strA - *strB;
 }
+
 
 // Função para ordenar o mapa
 void ordenarMapa(Map* mapa) {
@@ -290,12 +284,36 @@ void ordenarMapa(Map* mapa) {
         compararPalavras);
 }
 
+wchar_t* converterParaWide(const char* str) {
+    size_t tamanho = mbstowcs(NULL, str, 0); // Calcula o tamanho necessário
+    if (tamanho == (size_t)-1) {
+        perror("Erro ao converter string para wchar_t");
+        return NULL;
+    }
+
+    wchar_t* strWide = (wchar_t*)malloc((tamanho + 1) * sizeof(wchar_t));
+    if (strWide == NULL) {
+        perror("Erro ao alocar memória para wchar_t");
+        return NULL;
+    }
+
+    mbstowcs(strWide, str, tamanho + 1); // Faz a conversão
+    return strWide;
+}
+
+
 char* ContaPalavra(const char* caminhoArquivo) {
     // Obtém o conteúdo do arquivo como string
-    char* conteudo = lerArquivo(caminhoArquivo);
-
+    wchar_t* conteudo = lerArquivo(caminhoArquivo);
+    if (conteudo == NULL) {
+        return NULL; // Retorna NULL em caso de erro
+    }
     // Passa o conteúdo para a função contarPalavras
     Map* mapa = contarPalavras(conteudo);
+    if (mapa == NULL) {
+        free(conteudo);
+        return NULL; // Retorna NULL se o mapa não for criado corretamente
+    }
 
     ordenarMapa(mapa);
 
