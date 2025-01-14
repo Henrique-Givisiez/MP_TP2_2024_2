@@ -1,4 +1,13 @@
 // Copyright 2024 Henrique Givisiez dos Santos
+
+/**
+ * @file conta_palavra.c
+ * @brief Implementação do programa para contar palavras em arquivos de texto.
+ *
+ * Este arquivo contém as definições de funções para leitura de arquivos,
+ * manipulação de mapas de palavras, ordenação e geração de saídas formatadas.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +17,12 @@
 #include <locale.h>
 #include "./conta_palavra.h"
 
+/**
+ * @brief Lê o conteúdo de um arquivo e retorna como uma string wide (UTF-8).
+ * 
+ * @param caminhoArquivo Caminho para o arquivo a ser lido.
+ * @return wchar_t* Conteúdo do arquivo em wide string. Deve ser liberado pelo chamador.
+ */
 wchar_t* lerArquivo(const char* caminhoArquivo) {
     setlocale(LC_ALL, ""); // Define o locale para UTF-8
 
@@ -66,7 +81,11 @@ wchar_t* lerArquivo(const char* caminhoArquivo) {
     return conteudoWide;
 }
 
-// Função para criar um "map" com palavras e contagens
+/**
+ * @brief Cria uma estrutura de mapa para armazenar palavras e suas contagens.
+ * 
+ * @return Map* Ponteiro para o mapa criado. Deve ser liberado pelo chamador.
+ */
 Map* criarMap() {
     // Aloca a estrutura Map
     Map* mapa = (Map*)malloc(sizeof(Map));
@@ -81,7 +100,12 @@ Map* criarMap() {
     return mapa;
 }
 
-
+/**
+ * @brief Adiciona uma palavra ao mapa, incrementando sua contagem se já existir.
+ * 
+ * @param mapa Ponteiro para o mapa onde a palavra será adicionada.
+ * @param palavra Palavra a ser adicionada.
+ */
 void adicionarPalavra(Map* mapa, const wchar_t* palavra) {
     // Verifica se a palavra já existe no mapa
     for (int i = 0; i < mapa->tamanho; i++) {
@@ -103,16 +127,21 @@ void adicionarPalavra(Map* mapa, const wchar_t* palavra) {
     mapa->tamanho++;                                     // Incrementa o tamanho do mapa
 }
 
-
-// Função para liberar memória
+/**
+ * @brief Libera a memória utilizada por uma estrutura de mapa.
+ * 
+ * @param mapa Ponteiro para o mapa a ser liberado.
+ */
 void liberarMap(Map* mapa) {
     free(mapa);
 }
 
-#include <wchar.h>
-#include <stdlib.h>
-#include <stdio.h>
-
+/**
+ * @brief Conta as palavras em um texto e retorna um mapa com as contagens.
+ * 
+ * @param texto Texto a ser processado.
+ * @return Map* Ponteiro para o mapa com palavras e contagens. Deve ser liberado pelo chamador.
+ */
 Map* contarPalavras(const wchar_t* texto) {
     // Duplicar texto (como wide string)
     wchar_t* textoCopia = wcsdup(texto);
@@ -136,9 +165,12 @@ Map* contarPalavras(const wchar_t* texto) {
     return mapa;
 }
 
-
-
-// Função para transformar o map em string
+/**
+ * @brief Converte um mapa de palavras e contagens para uma string formatada.
+ * 
+ * @param mapa Ponteiro para o mapa a ser convertido.
+ * @return char* String formatada com palavras e contagens. Deve ser liberada pelo chamador.
+ */
 char* mapParaString(Map* mapa) {
     // Buffer para armazenar o resultado
     size_t tamanhoTotal = 1024; // Tamanho inicial
@@ -176,7 +208,12 @@ char* mapParaString(Map* mapa) {
     return resultado;
 }
 
-// Retorna "rank" para a ordem: minúscula base < maiúscula base < variações
+/**
+ * @brief Define a ordem de caracteres considerando acentos e capitalização.
+ * 
+ * @param c Caractere a ser avaliado.
+ * @return int Rank do caractere.
+ */
 int ordemAcento(wchar_t c) {
     wchar_t base = towlower(c); // Obtém a forma base minúscula do caractere
 
@@ -189,10 +226,12 @@ int ordemAcento(wchar_t c) {
     }
 }
 
-
-
-// Converte o caractere acentuado/maiúsculo em uma forma base minúscula.
-// Exemplos: 'Á', 'à', 'â', 'ã' -> 'a', 'Ç' -> 'c', etc.
+/**
+ * @brief Converte um caractere para sua forma base minúscula.
+ * 
+ * @param c Caractere a ser convertido.
+ * @return char Caractere convertido.
+ */
 char converteMinusculo(char c) {
     switch ((unsigned char)c) {
         // -- Variações de 'a'
@@ -234,7 +273,12 @@ char converteMinusculo(char c) {
     }
 }
 
-// Remove os acentos de um caractere, se aplicável
+/**
+ * @brief Remove os acentos de um caractere wide, se aplicável.
+ * 
+ * @param c Caractere a ser processado.
+ * @return wchar_t Caractere sem acento.
+ */
 wchar_t removerAcento(wchar_t c) {
     switch (c) {
         case L'à': case L'á': case L'â': case L'ã': case L'ä': case L'å': return L'a';
@@ -252,6 +296,14 @@ wchar_t removerAcento(wchar_t c) {
         default: return c; // Retorna o caractere original se não for acentuado
     }
 }
+
+/**
+ * @brief Função de comparação para ordenação de palavras no mapa.
+ * 
+ * @param a Ponteiro para o primeiro elemento.
+ * @param b Ponteiro para o segundo elemento.
+ * @return int Resultado da comparação (-, 0, +).
+ */
 int compararPalavras(const void* a, const void* b) {
     const Item* itemA = (const Item*)a;
     const Item* itemB = (const Item*)b;
@@ -280,9 +332,11 @@ int compararPalavras(const void* a, const void* b) {
     return *strA - *strB;
 }
 
-
-
-// Função para ordenar o mapa
+/**
+ * @brief Ordena o mapa de palavras em ordem alfabética.
+ * 
+ * @param mapa Ponteiro para o mapa a ser ordenado.
+ */
 void ordenarMapa(Map* mapa) {
     qsort(mapa->itens,
         mapa->tamanho,
@@ -290,6 +344,12 @@ void ordenarMapa(Map* mapa) {
         compararPalavras);
 }
 
+/**
+ * @brief Converte uma string de caracteres multibyte para wide string.
+ * 
+ * @param str String multibyte.
+ * @return wchar_t* Wide string correspondente. Deve ser liberada pelo chamador.
+ */
 wchar_t* converterParaWide(const char* str) {
     size_t tamanho = mbstowcs(NULL, str, 0); // Calcula o tamanho necessário
     if (tamanho == (size_t)-1) {
@@ -307,7 +367,12 @@ wchar_t* converterParaWide(const char* str) {
     return strWide;
 }
 
-
+/**
+ * @brief Função principal para contar palavras em um arquivo.
+ * 
+ * @param caminhoArquivo Caminho para o arquivo a ser processado.
+ * @return char* String formatada com palavras e contagens. Deve ser liberada pelo chamador.
+ */
 char* ContaPalavra(const char* caminhoArquivo) {
     // Obtém o conteúdo do arquivo como string
     wchar_t* conteudo = lerArquivo(caminhoArquivo);
