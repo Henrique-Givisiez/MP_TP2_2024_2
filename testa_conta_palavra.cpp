@@ -29,4 +29,9 @@ TEST_CASE("Conta palavra", "[single-file]") {
     std::string result5(teste5);
     free(teste5);
     REQUIRE(result5 == "a,24,b,24,c,24,d,24");
+
+    char* teste6 = ContaPalavra("./arquivos teste/teste6.txt");
+    std::string result6(teste6);
+    free(teste6);
+    REQUIRE(result6 == "a,2,á,2,A,1,e,1,é,2,E,1");
 }
