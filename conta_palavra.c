@@ -267,6 +267,11 @@ int compararPalavras(const void* a, const void* b) {
             return charA - charB; // Ordena com base no caractere normalizado
         }
 
+        // Se os caracteres normalizados são iguais, ordena por capitalização
+        if (*strA != *strB) {
+            return *strB - *strA; // Maiúsculas antes de minúsculas
+        }
+
         strA++;
         strB++;
     }
@@ -274,6 +279,7 @@ int compararPalavras(const void* a, const void* b) {
     // Se uma string terminou, a menor string vem primeiro
     return *strA - *strB;
 }
+
 
 
 // Função para ordenar o mapa
